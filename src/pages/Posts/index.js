@@ -15,15 +15,19 @@ import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore/lite'
 export default function Posts({ navigation }) {
 
     const [posts, setPosts] = useState([])
+    const [reload, setReload] = useState(false)
 
     const deletePost = async (id) => {
-        await deleteDoc(doc(id))
+        await deleteDoc(doc(database, "Posts", id))
+        getPosts()
     }
 
     const getPosts = async () => {
-        const postsCollection = collection(database, 'Posts');
+        const postsCollection = collection(database, "Posts");
         const postSnapshot = await getDocs(postsCollection);
-        const postList = postSnapshot.docs.map(doc => doc.data());
+
+        const postList = postSnapshot.docs.map(doc => ({...doc.data(), code: doc.id}));
+        
         setPosts(postList)
     }
 
@@ -37,25 +41,25 @@ export default function Posts({ navigation }) {
                 showsVerticalScrollIndicator={false}
                 data={posts}
                 renderItem={(item) => {
-                    console.log(posts)
+                    console.log(item)
                     return (
                         <View style={styles.Posts}>
-                            <TouchableOpacity
-                                style={styles.deletePost}
-                                onPress={() => deletePost(item.id)}
-                            >
-                                <FontAwesome name="trash" size={20} color="#00a680" />
-                            </TouchableOpacity>
-
                             <Text
                                 style={styles.postDescription}
                                 onPress={() => navigation.navigate('Details', {
-                                    id: item.id,
-                                    description: item.description,
+                                    id: item.item.id,
+                                    description: item.item.description,
                                 })}
                             >
-                                {item.description}
+                                {item.item.description}
                             </Text>
+                            <TouchableOpacity
+                                style={styles.deletePost}
+                                onPress={() => deletePost(item.item.code)}
+                            >
+                                <FontAwesome name="trash" size={20} color="red" />
+                            </TouchableOpacity>
+
                         </View>
                     )
                 }}

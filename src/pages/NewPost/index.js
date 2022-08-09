@@ -1,10 +1,9 @@
 import { View, Text } from 'react-native'
 
-
 export default function NewPost() {
-    return (
-        <View>
-            <Text>NewPost</Text>
-        </View>
-    )
+  return (
+    <View>
+      <Text>New Post</Text>
+    </View>
+  )
 }

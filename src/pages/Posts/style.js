@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     iconButton: {
         fontSize: 20,
         color: '#fff',
+        fontWeight: 'bold',
     },
     buttonNewPost: {
         position: 'absolute',
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     },
     deletePost: {
         justifyContent: 'center',
-        paddingLeft: 15,
+        paddingRight: 15,
     },
     postDescription: {
         width: '75%',
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 50,
         marginBottom: 5,
-        marginRight: 5,
+        marginLeft: 20,
         color: '#282b2db5',
     }
 
